@@ -1,0 +1,206 @@
+﻿@model ResultRoomDTO
+
+<div class="container py-5">
+    <h1 class="text-primary">@Model.Title</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.RoomCoverImage" alt="Oda Görseli" class="img-fluid rounded" />
+        </div>
+        <div class="col-md-6">
+            <h3>Oda Bilgileri</h3>
+            <p><strong>Oda Numarası:</strong> @Model.RoomNumber</p>
+            <p><strong>Fiyat:</strong> @Model.Price TL</p>
+            <p><strong>Yatak Sayısı:</strong> @Model.BedCount</p>
+            <p><strong>Banyo Sayısı:</strong> @Model.BathCount</p>
+            <p><strong>Wi-Fi:</strong> @Model.Wifi</p>
+            <p><strong>Açıklama:</strong> @Model.Description</p>
+            <p><strong>Kategori:</strong> @Model.CategoryName</p>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Rezervasyon Formu -->
+    <h3>Rezervasyon Yap</h3>
+    <form asp-controller="Booking" asp-action="ReserveRoom" method="post">
+        <input type="hidden" name="RoomId" value="@Model.RoomID" />
+
+        <div class="row">
+            <!-- Diğer form alanları -->
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="checkInDate">Giriş Tarihi:</label>
+                    <input type="date" id="checkInDate" name="CheckInDate" class="form-control" required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="checkOutDate">Çıkış Tarihi:</label>
+                    <input type="date" id="checkOutDate" name="CheckOutDate" class="form-control" required />
+                </div>
+            </div>
+
+            <!-- İsim alanı -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">İsim:</label>
+                    <input type="text" id="name" name="Name" class="form-control" required />
+                </div>
+            </div>
+
+            <!-- Soyisim alanı -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="surname">Soyisim:</label>
+                    <input type="text" id="surname" name="Surname" class="form-control" required />
+                </div>
+            </div>
+
+            <!-- Telefon alanı -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="phone">Telefon:</label>
+                    <input type="tel" id="phone" name="Phone" class="form-control" required />
+                </div>
+            </div>
+
+            <!-- Mail alanı -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="mail">E-posta:</label>
+                    <input type="email" id="mail" name="Mail" class="form-control" required />
+                </div>
+            </div>
+
+            <!-- Giriş ve Çıkış saatleri -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="checkInTime">Giriş Saati:</label>
+                    <select id="checkInTime" name="CheckInTime" class="form-control" required>
+                        @for (int hour = 0; hour < 24; hour++)
+                        {
+                            var time = $"{hour:D2}:00";
+                            <option value="@time">@time</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="checkOutTime">Çıkış Saati:</label>
+                    <select id="checkOutTime" name="CheckOutTime" class="form-control" required>
+                        @for (int hour = 0; hour < 24; hour++)
+                        {
+                            var time = $"{hour:D2}:00";
+                            <option value="@time">@time</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Rezervasyon Yap</button>
+    </form>
+
+</div>
+
+
+@* <div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Rezervasyon Paneli</h6>
+            <h1 class="mb-5">Odanızı Şimdi <span class="text-primary text-uppercase">Rezerve Edin</span></h1>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6 text-end">
+                        <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="~/hotel-html-template/img/about-1.jpg" style="margin-top: 25%;">
+                    </div>
+                    <div class="col-6 text-start">
+                        <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="~/hotel-html-template/img/about-2.jpg">
+                    </div>
+                    <div class="col-6 text-end">
+                        <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="~/hotel-html-template/img/about-3.jpg">
+                    </div>
+                    <div class="col-6 text-start">
+                        <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="~/hotel-html-template/img/about-4.jpg">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="wow fadeInUp" data-wow-delay="0.2s">
+                    <form method="post" asp-action="AddBooking" asp-controller="Booking">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" asp-for="Name" placeholder="Adınız Soyadınız">
+                                    <label for="name">Adınız Soyadınız</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" asp-for="Mail" placeholder="Mail Adresiniz">
+                                    <label for="email">Mail Adresiniz</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating date" id="date3" data-target-input="nearest">
+                                    <input type="datetime" class="form-control datetimepicker-input" asp-for="Checkin" id="checkin" placeholder="Giriş Tarihi" data-target="#date3" data-toggle="datetimepicker" />
+                                    <label for="checkin">Giriş Tarihi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating date" id="date4" data-target-input="nearest">
+                                    <input type="datetime   " class="form-control datetimepicker-input" asp-for="CheckOut" id="checkout" placeholder="Çıkış Tarihi" data-target="#date4" data-toggle="datetimepicker" />
+                                    <label for="checkout">Çıkış Tarihi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select" id="select1" asp-for="AdultCount">
+                                        <option value="1">Yetişkin 1</option>
+                                        <option value="2">Yetişkin 2</option>
+                                        <option value="3">Yetişkin 3</option>
+                                    </select>
+                                    <label for="select1">Yetişkin Sayısı</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select" id="select2" asp-for="ChildCount">
+                                        <option value="1">Çocuk 1</option>
+                                        <option value="2">Çocuk 2</option>
+                                        <option value="3">Çocuk 3</option>
+                                    </select>
+                                    <label for="select2">Çocuk Sayısı</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <select class="form-select" id="select3" asp-for="RoomCount">
+                                        <option value="1">Oda 1</option>
+                                        <option value="2">Oda 2</option>
+                                        <option value="3">Oda 3</option>
+                                    </select>
+                                    <label for="select3">Oda Sayısı</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Özel İstekler" asp-for="SpecialRequest" id="message" style="height: 100px"></textarea>
+                                    <label for="message">Özel İstekler</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Rezervasyon Yap</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@

@@ -1,0 +1,22 @@
+﻿@using HotelProject.WebUI.Models.Mail
+@model AdminMailViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <label>Alıcı Mail Adresi</label>
+    <div class="form-floating">
+        @Html.DropDownListFor(x => x.ReceiverMail, (List<SelectListItem>)ViewBag.user, new { @class = "form-control" })
+        <label for="subject">Konuyu Seçiniz</label>
+    </div>
+    <br />
+    <label>Konu</label>
+    <input type="text" class="form-control" asp-for="Subject" />
+    <br />
+    <label>Mesajınız</label>
+    <textarea class="form-control h-150px" rows="6" id="comment" asp-for="Body"></textarea>
+    <br />
+    <button class="btn btn-primary">Maili Gönder</button>
+</form>
